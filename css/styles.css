@@ -1,0 +1,863 @@
+/* ESTILOS GENERALES DEL PROYECTO
+   Este archivo contiene los estilos base que siempre estarán activos */
+
+/* Reset básico: elimina los márgenes y padding que los navegadores añaden por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box hace que el padding y border se incluyan en el tamaño total del elemento */
+    box-sizing: border-box;
+}
+
+/* Estilos generales del body (todo el documento) */
+body {
+    /* Fuente del sistema operativo para mejor rendimiento */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* line-height: espacio entre líneas de texto (1.6 = 160% del tamaño de fuente) */
+    line-height: 1.6;
+    /* min-height: altura mínima del 100% del viewport (pantalla) */
+    min-height: 100vh;
+}
+
+/* Header donde se cargará el slider de imágenes */
+#slider-header {
+    position: relative; /* Necesario para poder poscionar los botones*/
+    max-width: 1200px;
+    margin: 30px auto;
+    border-radius: 15px;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    height: 400px; /* Altura fija para el slider */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Oculta cualquier contenido que sobresalga */
+}
+/* 
+   BOTONES DE NAVEGACIÓN DEL SLIDER
+    */
+
+/* Contenedor de los controles debe estar dentro del slider */
+.tns-controls {
+    position: absolute; /* Posicionado dentro del #slider-header */
+    width: 100%; /* Ocupa todo el ancho del slider */
+    height: 100%; /* Ocupa toda la altura del slider */
+    top: 0;
+    left: 0;
+    pointer-events: none; /* No bloquea los clicks en las imágenes */
+}
+
+/* Estilos generales de los botones prev/next */
+.tns-controls button {
+    position: absolute; /* Posición absoluta dentro del .tns-controls */
+    top: 50%; /* A la mitad verticalmente */
+    transform: translateY(-50%); /* Centrado perfecto vertical */
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 10;
+    transition: background-color 0.3s;
+    pointer-events: auto; /* Los botones sí reciben clicks */
+}
+
+/* Botón izquierdo (anterior/prev) - pegado al borde izquierdo DEL SLIDER */
+.tns-controls button:first-child {
+    left: 20px; /* 20px desde el borde izquierdo del slider */
+}
+
+/* Botón derecho (siguiente/next) - pegado al borde derecho DEL SLIDER */
+.tns-controls button:last-child {
+    right: 20px; /* 20px desde el borde derecho del slider */
+}
+
+/* Efecto hover */
+.tns-controls button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+/* Imágenes del slider ocupan todo el espacio */
+.slider img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover; /* Recorta la imagen para que encaje sin deformarse */
+    display: block;
+}
+
+/* Barra de navegación principal */
+nav {
+    display: flex; /* Flexbox para alinear los enlaces horizontalmente */
+    justify-content: center; /* Centra los elementos horizontalmente */
+    gap: 20px; /* Espacio de 20px entre cada enlace */
+    padding: 20px; /* Espacio interno de 20px en todos los lados */
+    background-color: #333; /* Fondo gris oscuro */
+    position: sticky; /* Se queda fijo en la parte superior al hacer scroll */
+    top: 0; /* Se pega arriba del todo */
+    z-index: 100; /* Aparece por encima de otros elementos (números más altos = más arriba) */
+}
+
+/* Estilos para los enlaces dentro del nav */
+nav a {
+    color: white; /* Texto blanco */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    padding: 10px 20px; /* Espacio interno: 10px arriba/abajo, 20px izquierda/derecha */
+    border-radius: 5px; /* Bordes redondeados de 5px */
+    transition: background-color 0.3s; /* Animación suave del color de fondo en 0.3 segundos */
+}
+
+/* Estilo cuando pasas el ratón por encima de un enlace */
+nav a:hover {
+    background-color: #555; /* Fondo gris más claro al hacer hover */
+}
+
+/* Contenedor principal de contenido */
+main {
+    max-width: 1200px; /* Ancho máximo de 1200px */
+    margin: 0 auto; /* Centra el contenedor horizontalmente (0 arriba/abajo, auto izquierda/derecha) */
+    padding: 20px; /* Espacio interno de 20px */
+}
+
+/* Todas las secciones están ocultas por defecto (lógica de SPA) */
+.section-content {
+    display: none; /* No se muestra */
+    min-height: 500px; /* Altura mínima para evitar saltos bruscos al cambiar de sección */
+}
+
+/* Sección activa: la que se está mostrando actualmente */
+.section-content.active {
+    display: block; /* Se muestra como bloque */
+}
+
+/* Botón para volver arriba (scroll to top) */
+.scroll-top-btn {
+    position: fixed; /* Posición fija en la pantalla, no se mueve con el scroll */
+    bottom: 30px; /* 30px desde el borde inferior */
+    right: 30px; /* 30px desde el borde derecho */
+    width: 50px; /* Ancho de 50px */
+    height: 50px; /* Alto de 50px (círculo perfecto con width y height iguales) */
+    border-radius: 50%; /* 50% lo convierte en un círculo perfecto */
+    border: none; /* Sin borde */
+    font-size: 24px; /* Tamaño de la flecha */
+    cursor: pointer; /* Manita al pasar el ratón */
+    display: none; /* Oculto por defecto */
+    z-index: 1000; /* Por encima de todo */
+    transition: opacity 0.3s; /* Transición suave de opacidad */
+}
+
+/* Cuando el botón debe mostrarse (clase añadida con JS) */
+.scroll-top-btn.visible {
+    display: block; /* Se muestra */
+}
+
+/* 
+   BOTONES DE CAMBIO DE TEMA
+    */
+
+/* Contenedor de botones de tema - centrado verticalmente en el lateral derecho */
+#theme-switcher {
+    position: fixed; /* Fijo en la pantalla */
+    top: 50%; /* A la mitad verticalmente */
+    transform: translateY(-50%); /* Centrado perfecto vertical */
+    right: 20px; /* 20px desde el borde derecho */
+    display: flex; /* Flexbox para organizar */
+    flex-direction: column; /* En columna vertical */
+    gap: 15px; /* Espacio entre cada botón */
+    z-index: 100; /* Por encima del contenido */
+}
+
+/* Botones de tema - círculos de color */
+#theme-switcher button {
+    width: 45px; /* Ancho del círculo */
+    height: 45px; /* Alto del círculo (igual que width = círculo perfecto) */
+    border-radius: 50%; /* Hacer el botón completamente redondo */
+    border: 3px solid white; /* Borde blanco para que se vea bien */
+    cursor: pointer; /* Cursor de manita */
+    transition: transform 0.2s, box-shadow 0.2s; /* Animación suave */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
+}
+
+/* Efecto hover: aumentar tamaño y sombra */
+#theme-switcher button:hover {
+    transform: scale(1.15); /* Aumenta al 115% */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Sombra más grande */
+}
+
+/* Colores específicos de cada botón */
+#theme-switcher button[data-theme="original"] {
+    background-color: #ddd; /* Gris claro */
+}
+
+#theme-switcher button[data-theme="blue"] {
+    background-color: #2196f3; /* Azul */
+}
+
+#theme-switcher button[data-theme="green"] {
+    background-color: #4caf50; /* Verde */
+}
+
+#theme-switcher button[data-theme="red"] {
+    background-color: #f44336; /* Rojo */
+}
+/* Estilos para el título principal (h1) */
+#titulo {
+    text-align: center; /* Centra el texto */
+    padding: 20px; /* Espacio interno de 20px */
+    font-size: 2.5rem; /* Tamaño de fuente grande (2.5 veces el tamaño base) */
+}
+
+/* 
+   ESTILOS PARA LAS PELÍCULAS (POSTS)
+    */
+
+/* Mensaje de carga y error */
+.loading, .error {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2rem;
+}
+
+.error {
+    color: #d32f2f;
+}
+
+/* Grid de películas */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Columnas responsivas */
+    gap: 30px; /* Espacio entre tarjetas */
+    padding: 20px 0;
+}
+
+/* Tarjeta de película */
+.movie-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Efecto hover en la tarjeta */
+.movie-card:hover {
+    transform: translateY(-5px); /* Levanta la tarjeta */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Poster de la película */
+.movie-poster {
+    width: 100%;
+    height: 350px;
+    object-fit: cover; /* Recorta la imagen para que encaje */
+}
+
+/* Información de la película */
+.movie-info {
+    padding: 15px;
+    flex-grow: 1; /* Ocupa el espacio restante */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título de la película */
+.movie-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Año y tipo */
+.movie-year, .movie-type {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* Botón "Leer más" */
+.btn-read-more {
+    margin-top: auto; /* Empuja el botón hacia abajo */
+    padding: 10px 20px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-read-more:hover {
+    background-color: #1976d2;
+}
+
+/* 
+   MODAL DE PELÍCULA
+    */
+
+/* Fondo oscuro del modal */
+.movie-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo negro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Por encima de todo */
+}
+/* Estilos para el contenido principal del modal */
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto; /* Permite scroll vertical */
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos para el botón de cerrar (X) en la esquina superior derecha */
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.modal-close:hover {
+    color: #d32f2f; /* Cambia color al pasar el mouse */
+}
+
+/* Contenedor flexible para el cuerpo del modal */
+.modal-body {
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+}
+
+/* Estilos para la imagen del póster dentro del modal */
+.modal-poster {
+    width: 250px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Contenedor para la información del modal */
+.modal-info {
+    flex: 1; /* Ocupa el espacio restante */
+}
+
+.modal-info h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-info p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.modal-info strong {
+    color: #2196f3; /* Color para elementos destacados */
+}
+
+/* Media query: cambia a disposición vertical en pantallas pequeñas */
+@media (max-width: 768px) {
+    .modal-body {
+        flex-direction: column; /* Apila elementos verticalmente */
+    }
+    
+    .modal-poster {
+        width: 100%; /* Póster ocupa todo el ancho */
+    }
+}
+
+/* Estilos para el pie de página */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #737373;
+    color: white;
+}
+
+/* Estilos para el indicador de trailer disponible */
+.movie-trailer {
+    color: #4caf50;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* Sección del trailer dentro del modal */
+.modal-trailer {
+    padding: 20px 30px;
+    border-top: 1px solid #ddd;
+}
+
+.modal-trailer h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Sección del reparto de actores dentro del modal */
+.modal-cast {
+    padding: 20px 30px;
+    border-top: 1px solid #ddd;
+}
+
+.modal-cast h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Contenedor de cuadrícula para la lista del reparto */
+.cast-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px;
+}
+
+/* Estilos para cada miembro individual del reparto */
+.cast-member {
+    text-align: center;
+}
+
+.cast-member img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cast-member p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+
+.cast-member .character {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Sección del resumen/descripción dentro del modal */
+.modal-overview {
+    padding: 20px 30px;
+    border-top: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.modal-overview h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.modal-overview p {
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+}
+
+/* Contenedor del reloj analógico */
+#reloj-analogico {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 40px auto;
+}
+
+/* Crea un borde circular alrededor del reloj */
+#reloj-analogico::before {
+    content: "";
+    position: absolute;
+    top: 2px;           /* Desplaza el borde hacia abajo */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 8px solid #333; /* Grosor y color del borde */
+    border-radius: 50%;
+    box-sizing: border-box;
+    pointer-events: none;    /* Permite interacción con elementos internos */
+}
+
+/* Estilos base para todas las manecillas del reloj */
+.manecilla {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%);
+}
+
+/* Manecilla de las horas */
+.manecilla.hora {
+    width: 6px;
+    height: 70px;
+    background-color: #333;
+    top: calc(50% - 70px);
+}
+
+/* Manecilla de los minutos */
+.manecilla.minuto {
+    width: 4px;
+    height: 100px;
+    background-color: #555;
+    top: calc(50% - 100px);
+}
+
+/* Manecilla de los segundos */
+.manecilla.segundo {
+    width: 2px;
+    height: 120px;
+    background-color: red;
+    top: calc(50% - 120px);
+}
+
+/* Punto central del reloj */
+.centro {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Estilos para los números del reloj */
+.numero-reloj {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Estilos para la hora digital */
+#hora-digital {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* Contenedor del formulario de registro */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Grupo para cada campo del formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Estilos para las etiquetas de los campos */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Asterisco rojo para indicar campos obligatorios */
+.required {
+    color: #d32f2f;
+}
+
+/* Estilos para inputs y selects */
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+/* Cambia borde al enfocar un campo */
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #2196f3;
+}
+
+/* Estilo para campo con error (borde rojo) */
+.field-error {
+    border-color: #d32f2f !important;
+    background-color: #ffebee;
+}
+
+/* Estilo para campo válido (borde verde) */
+.field-success {
+    border-color: #4caf50 !important;
+    background-color: #e8f5e9;
+}
+
+/* Mensajes de error ocultos por defecto */
+.error-message {
+    display: none;
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Estilo para campo de edad (solo lectura) */
+#edad {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* Botón de envío del formulario (inicialmente desactivado) */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #ccc;
+    color: #666;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: not-allowed;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+/* Botón de envío cuando está habilitado */
+.btn-enabled {
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-enabled:hover {
+    background-color: #388e3c;
+}
+
+/* Contenedor para mensajes del formulario (éxito/error/carga) */
+.form-message {
+    display: none;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Mensaje de éxito */
+.form-message.success {
+    background-color: #e8f5e9;
+    color: #4caf50;
+    border: 2px solid #4caf50;
+}
+
+/* Mensaje de error */
+.form-message.error {
+    background-color: #ffebee;
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+}
+
+/* Mensaje de carga */
+.form-message.loading {
+    background-color: #e3f2fd;
+    color: #2196f3;
+    border: 2px solid #2196f3;
+}
+
+/* Título principal del quiz */
+#quiz h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2rem;
+}
+
+/* Contenedor para cada pregunta individual */
+.quiz-question {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-question h3 {
+    color: #2196f3;
+    margin-bottom: 15px;
+}
+
+.question-text {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Contenedor flexible para las opciones de respuesta */
+.answers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Estilos para cada opción de respuesta */
+.answer-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.answer-option:hover {
+    background-color: #f5f5f5;
+    border-color: #2196f3;
+}
+
+.answer-option input[type="radio"] {
+    margin-right: 12px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.answer-option label {
+    cursor: pointer;
+    flex: 1;
+    font-size: 1rem;
+}
+
+/* Estilo para respuesta correcta */
+.correct-answer {
+    background-color: #e8f5e9;
+    border-color: #4caf50;
+}
+
+/* Estilo para respuesta incorrecta seleccionada */
+.incorrect-answer {
+    background-color: #ffebee;
+    border-color: #d32f2f;
+}
+
+/* Contenedor de retroalimentación para cada pregunta */
+.question-feedback {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* Fondo para retroalimentación correcta */
+.feedback-correct-bg {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* Fondo para retroalimentación incorrecta */
+.feedback-incorrect-bg {
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+.feedback-correct-answer {
+    display: block;
+    margin-top: 8px;
+    color: #4caf50;
+    font-weight: normal;
+}
+
+/* Botón para evaluar el quiz */
+.evaluate-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 30px auto;
+    padding: 15px 30px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.evaluate-btn:hover {
+    background-color: #1976d2;
+}
+
+/* Contenedor para mostrar el resultado final del quiz */
+.quiz-result {
+    display: none;
+    background-color: white;
+    padding: 30px;
+    margin-top: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.quiz-result h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.result-score {
+    font-size: 1.3rem;
+    margin: 15px 0;
+    color: #555;
+}
+
+.result-percentage {
+    font-size: 1.5rem;
+    margin: 15px 0;
+    color: #2196f3;
+}
+
+.result-message {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Mensaje de resultado exitoso */
+.result-message.success {
+    background-color: #e8f5e9;
+    color: #4caf50;
+}
+
+/* Mensaje de resultado bueno */
+.result-message.good {
+    background-color: #e3f2fd;
+    color: #2196f3;
+}
+
+/* Mensaje para intentar nuevamente */
+.result-message.try-again {
+    background-color: #fff3e0;
+    color: #ff9800;
+}

@@ -1,0 +1,19 @@
+/* TEMA ORIGINAL
+   Este archivo se carga por defecto */
+/* Color de fondo y texto del documento */
+body {
+    background-color: #f4f4f4; /* Fondo gris muy claro */
+    color: #333; /* Texto gris oscuro para buen contraste */
+}
+
+/* Colores de los botones de cambio de tema */
+#theme-switcher button {
+    background-color: #ddd; /* Fondo gris claro */
+    color: #333; /* Texto gris oscuro */
+}
+
+/* Colores del botón de scroll to top */
+.scroll-top-btn {
+    background-color: #333; /* Fondo gris oscuro */
+    color: white; /* Texto blanco para buen contraste */
+}

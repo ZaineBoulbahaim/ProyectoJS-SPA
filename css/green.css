@@ -1,0 +1,18 @@
+/* TEMA VERDE */
+/* Color de fondo y texto del documento */
+body {
+    background-color: #e8f5e9; /* Fondo verde muy claro */
+    color: #1b5e20; /* Texto verde oscuro para buen contraste */
+}
+
+/* Colores de los botones de cambio de tema */
+#theme-switcher button {
+    background-color: #4caf50; /* Fondo verde vibrante */
+    color: white; /* Texto blanco */
+}
+
+/* Colores del botón de scroll to top */
+.scroll-top-btn {
+    background-color: #388e3c; /* Fondo verde medio-oscuro */
+    color: white; /* Texto blanco */
+}

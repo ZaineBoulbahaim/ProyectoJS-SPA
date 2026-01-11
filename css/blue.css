@@ -1,0 +1,18 @@
+/* TEMA AZUL */
+/* Color de fondo y texto del documento */
+body {
+    background-color: #e3f2fd; /* Fondo azul muy claro (Material Design) */
+    color: #0d47a1; /* Texto azul oscuro para buen contraste */
+}
+
+/* Colores de los botones de cambio de tema */
+#theme-switcher button {
+    background-color: #2196f3; /* Fondo azul vibrante */
+    color: white; /* Texto blanco */
+}
+
+/* Colores del botón de scroll to top */
+.scroll-top-btn {
+    background-color: #1976d2; /* Fondo azul medio-oscuro */
+    color: white; /* Texto blanco */
+}

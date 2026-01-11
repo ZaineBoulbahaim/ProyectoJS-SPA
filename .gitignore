@@ -1,0 +1,11 @@
+# Dependencias de Node
+node_modules/
+# Archivos de configuración con claves sensibles
+config.js
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+# Archivos de logs
+*.log
+
+https://opentdb.com/api.php?amount=10&category=27&type=multiple&difficulty=medium

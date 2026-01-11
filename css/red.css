@@ -1,0 +1,18 @@
+/* TEMA ROJO */
+/* Color de fondo y texto del documento */
+body {
+    background-color: #ffebee; /* Fondo rojo muy claro */
+    color: #b71c1c; /* Texto rojo oscuro para buen contraste */
+}
+
+/* Colores de los botones de cambio de tema */
+#theme-switcher button {
+    background-color: #f44336; /* Fondo rojo vibrante */
+    color: white; /* Texto blanco */
+}
+
+/* Colores del botón de scroll to top */
+.scroll-top-btn {
+    background-color: #d32f2f; /* Fondo rojo medio-oscuro */
+    color: white; /* Texto blanco */
+}

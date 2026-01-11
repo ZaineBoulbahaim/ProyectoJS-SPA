@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projecte JS SPA</title>
+    <!-- Estilos generales -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Tema por defecto -->
+    <link id="tema" rel="stylesheet" href="css/original.css">
+    <!-- Estilos del slider Tiny Slider -->
+    <link rel="stylesheet" href="node_modules/tiny-slider/dist/tiny-slider.css">
+</head>
+<body>
+    
+    <!-- Título principal del proyecto -->
+    <h1 id="titulo">Proyecto JS SPA</h1>
+    <!-- Navegación principal de la SPA -->
+    <nav>
+        <!-- data-section indica la sección que se mostrará al hacer click -->
+        <a href="#" data-section="posts">Posts</a>
+        <a href="#" data-section="reloj">Reloj</a>
+        <a href="#" data-section="registro">Registro</a>
+        <a href="#" data-section="quiz">Quiz</a>
+    </nav>
+
+    <!-- Header donde se cargará el slider de imágenes -->
+    <header id="slider-header"></header>
+
+    <!-- Botones para cambiar el tema del sitio -->
+    <div id="theme-switcher">
+        <button data-theme="original"></button>
+        <button data-theme="green"></button>
+        <button data-theme="blue"></button>
+        <button data-theme="red"></button>
+    </div>
+
+    <!-- Contenido principal de la SPA -->
+    <main>
+        <!-- Sección de posts -->
+        <section id="posts" class="section-content"></section>
+        <!-- Sección vacía del reloj (listo para construir desde cero) -->
+        <section id="reloj" class="section-content"></section>
+        <!-- Sección de registro de usuario -->
+        <section id="registro" class="section-content"></section>
+        <!-- Sección del quiz -->
+        <section id="quiz" class="section-content"></section>
+    </main>
+
+    <!-- Botón para scroll hacia arriba -->
+    <button id="scroll-top" class="scroll-top-btn">↑</button>
+
+    <!-- Script principal que importa todos los módulos de la SPA -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Pie de página -->
+    <footer id="footer">Zaine A. Boulbahaim 2026</footer>
+</body>
+</html>
